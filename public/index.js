@@ -165,6 +165,16 @@ var percentageOfDecrease = 1;
   }
 }
 
+for (var i = 0; i < deliveries.length; i++) {
+  var valueInsurance,valueTreasury,valueConvargo
+  var valueCommission = deliveries[i].price*0.3;
+  valueInsurance = valueCommission/2;
+  valueTreasury = Math.floor(deliveries[i].distance/500)
+  valueConvargo = valueCommission - valueInsurance - valueTreasury
+  deliveries[i].commission["insurance"]=valueInsurance
+  deliveries[i].commission["treasury"]=valueTreasury
+  deliveries[i].commission["convargo"]=valueConvargo
+}
 
 console.log(truckers);
 console.log(deliveries);
