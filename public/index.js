@@ -183,6 +183,7 @@ for (var i = 0; i < deliveries.length; i++) {
     deliveries[i].commission["convargo"]=deliveries[i].commission["convargo"]+deliveries[i].volume
   }
 }
+
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
