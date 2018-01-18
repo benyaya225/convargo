@@ -164,7 +164,7 @@ var percentageOfDecrease = 1;
     deliveries[i].price = deliveries[i].distance * truckers[i].pricePerKm + truckers[i].pricePerVolume * percentageOfDecrease * deliveries[i].volume ;
   }
 }
-
+//calculation of the commission
 for (var i = 0; i < deliveries.length; i++) {
   var valueInsurance,valueTreasury,valueConvargo
   var valueCommission = deliveries[i].price*0.3;
@@ -175,7 +175,14 @@ for (var i = 0; i < deliveries.length; i++) {
   deliveries[i].commission["treasury"]=valueTreasury
   deliveries[i].commission["convargo"]=valueConvargo
 }
-
+//additional charge
+for (var i = 0; i < deliveries.length; i++) {
+  if(deliveries[i].options['deductibleReduction'] == true)
+  {
+    deliveries[i].price = deliveries[i].price + deliveries[i].volume
+    deliveries[i].commission["convargo"]=deliveries[i].commission["convargo"]+deliveries[i].volume
+  }
+}
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
