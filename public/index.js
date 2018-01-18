@@ -148,3 +148,15 @@ const actors = [{
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
+
+for (var i = 0; i < 3; i++) {
+  if(deliveries[i].truckerId == truckers[i].id)
+  {
+    deliveries[i].price = deliveries[i].distance * truckers[i].pricePerKm + deliveries[i].volume * truckers[i].pricePerVolume;
+  }
+}
+
+
+console.log(truckers);
+console.log(deliveries);
+console.log(actors);
