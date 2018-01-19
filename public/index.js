@@ -145,44 +145,54 @@ const actors = [{
   }]
 }];
 
-for (var i = 0; i < 3; i++) {
-var percentageOfDecrease = 1;
-  if (deliveries[i].volume>5) {
-    percentageOfDecrease = 0.1
-  }
-  if (deliveries[i].volume>10) {
-    percentageOfDecrease = 0.3
-  }
-  if (deliveries[i].volume>25) {
-    percentageOfDecrease = 0.5
-  }
+function NewPrice() {
+  for (var i = 0; i < 3; i++) {
+  var percentageOfDecrease = 1;
+    if (deliveries[i].volume>5) {
+      percentageOfDecrease = 0.1
+    }
+    if (deliveries[i].volume>10) {
+      percentageOfDecrease = 0.3
+    }
+    if (deliveries[i].volume>25) {
+      percentageOfDecrease = 0.5
+    }
 
-  if(deliveries[i].truckerId == truckers[i].id)
-  {
+    if(deliveries[i].truckerId == truckers[i].id)
+    {
 
-    if(deliveries[i].volume)
-    deliveries[i].price = deliveries[i].distance * truckers[i].pricePerKm + truckers[i].pricePerVolume * percentageOfDecrease * deliveries[i].volume ;
+      if(deliveries[i].volume)
+      deliveries[i].price = deliveries[i].distance * truckers[i].pricePerKm + truckers[i].pricePerVolume * percentageOfDecrease * deliveries[i].volume ;
+    }
   }
 }
-//calculation of the commission
-for (var i = 0; i < deliveries.length; i++) {
-  var valueInsurance,valueTreasury,valueConvargo
-  var valueCommission = deliveries[i].price*0.3;
-  valueInsurance = valueCommission/2;
-  valueTreasury = Math.floor(deliveries[i].distance/500)
-  valueConvargo = valueCommission - valueInsurance - valueTreasury
-  deliveries[i].commission["insurance"]=valueInsurance
-  deliveries[i].commission["treasury"]=valueTreasury
-  deliveries[i].commission["convargo"]=valueConvargo
-}
-//additional charge
-for (var i = 0; i < deliveries.length; i++) {
-  if(deliveries[i].options['deductibleReduction'] == true)
-  {
-    deliveries[i].price = deliveries[i].price + deliveries[i].volume
-    deliveries[i].commission["convargo"]=deliveries[i].commission["convargo"]+deliveries[i].volume
+function commission() {
+  //calculation of the commission
+  for (var i = 0; i < deliveries.length; i++) {
+    var valueInsurance,valueTreasury,valueConvargo
+    var valueCommission = deliveries[i].price*0.3;
+    valueInsurance = valueCommission/2;
+    valueTreasury = Math.floor(deliveries[i].distance/500)
+    valueConvargo = valueCommission - valueInsurance - valueTreasury
+    deliveries[i].commission["insurance"]=valueInsurance
+    deliveries[i].commission["treasury"]=valueTreasury
+    deliveries[i].commission["convargo"]=valueConvargo
   }
 }
+function Charge() {
+  //additional charge
+  for (var i = 0; i < deliveries.length; i++) {
+    if(deliveries[i].options['deductibleReduction'] == true)
+    {
+      deliveries[i].price = deliveries[i].price + deliveries[i].volume
+      deliveries[i].commission["convargo"]=deliveries[i].commission["convargo"]+deliveries[i].volume
+    }
+  }
+}
+
+NewPrice();
+commission();
+Charge();
 
 console.log(truckers);
 console.log(deliveries);
